@@ -1,3 +1,3 @@
-require('dotenv').config();
-const start = require('./start');
+require("dotenv").config();
+const start = require("./core/start");
 start();

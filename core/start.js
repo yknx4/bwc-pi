@@ -3,7 +3,7 @@ const { promisify } = require("util");
 const { spawn } = require("child_process");
 const { exec } = require("shelljs");
 const { platform } = require("os");
-const playFile = require("./core");
+const playFile = require("./index");
 
 const scanForWifi = promisify(WiFiControl.scanForWiFi);
 
