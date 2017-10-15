@@ -1,3 +1,4 @@
 require("dotenv").config();
+require("./webserver");
 const start = require("./core/start");
 start();

@@ -10,7 +10,7 @@ const scanForWifi = promisify(WiFiControl.scanForWiFi);
 const allowedMacs = ["8e:f5:a3:ed:8a:0d"];
 
 WiFiControl.init({
-  debug: false
+  debug: true
 });
 
 const netIntensity = net => parseFloat(net.signal_level);
