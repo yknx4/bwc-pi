@@ -18,12 +18,12 @@ content-type: application/json
     "enabled": true
 }
 ### Update
-PUT http://rpi1:8000/devices/f1989d25-c311-44c2-85ab-6eb6c48ebfef HTTP/1.1
+PUT http://rpi1:8000/devices/8e4a08b0-4938-4cd7-8915-9264ca5e1406 HTTP/1.1
 Authorization: Basic ale figueroa
 content-type: application/json
 
 {
-    "enabled": false 
+    "ssid": "nopi" 
 }
 ###
 POST http://rpi1:8000/devices HTTP/1.1
