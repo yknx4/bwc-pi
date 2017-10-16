@@ -17,6 +17,7 @@ const netIntensity = net => parseFloat(net.signal_level);
 async function checkNetwork(net) {
   const devices = await Device.getAll();
   const allowedSsids = devices.map(e => e.ssid);
+  console.log(allowedSsids);
   const blindNearby = allowedSsids.some(ssid => net.ssid === ssid);
   if (blindNearby) {
     console.log(`${net.ssid} ${net.signal_level} Volume ${volume(net) * 100}%`);
