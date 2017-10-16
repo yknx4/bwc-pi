@@ -21,7 +21,7 @@ async function checkNetwork(net) {
   const blindNearby = allowedSsids.some(ssid => net.ssid === ssid);
   if (blindNearby) {
     console.log(`Found blind user => ${net.ssid} ${net.signal_level}`);
-    console.log(
+    exec(
       playFile(
         path.join(__dirname, "./sounds/water.wav"),
         Math.abs(netIntensity(net))
