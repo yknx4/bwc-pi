@@ -15,10 +15,9 @@ WiFiControl.init({
 const netIntensity = net => parseFloat(net.signal_level);
 
 async function checkNetwork(net) {
-  let allowedMacs = await Device.getAll();
-  allowedMacs = allowedMacs.map(e => e.mac);
-  console.log(net);
-  const blindNearby = allowedMacs.some(netMac => net.mac === netMac);
+  const devices = await Device.getAll();
+  const allowedSsids = devices.map(e => e.ssid);
+  const blindNearby = allowedSsids.some(ssid => net.ssid === ssid);
   if (blindNearby) {
     console.log(`${net.ssid} ${net.signal_level} Volume ${volume(net) * 100}%`);
     exec(
