@@ -21,7 +21,7 @@ async function checkNetwork(net) {
   const blindNearby = allowedSsids.some(ssid => net.ssid === ssid);
   if (blindNearby) {
     console.log(`${net.ssid} ${net.signal_level}`);
-    exec(
+    spawn(
       playFile(
         path.join(__dirname, "./sounds/water.wav"),
         Math.abs(netIntensity(net))
