@@ -35,8 +35,12 @@ setInterval(() => {
   spawn("iwlist", ["wlan0", "scan"]);
 }, 2500);
 
+let checking = false;
+
 async function check() {
+  if (checking) return;
   const { networks } = await scanForWifi();
+  checking = false;
   for (let index = 0; index < networks.length; index++) {
     const net = networks[index];
     if (await checkNetwork(net)) {
