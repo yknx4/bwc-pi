@@ -25,7 +25,7 @@ content-type: application/json
 {
     "enabled": false 
 }
-
+###
 POST http://rpi1:8000/devices HTTP/1.1
 Authorization: Basic ale figueroa
 content-type: application/json
