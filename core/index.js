@@ -1,10 +1,10 @@
 const { platform } = require("os");
-
-console.log(`Loading specifics for ${platform()} platform.`);
+const volumeForNet = require("./volume");
 const { volume, command } = require(`./${platform()}`);
+console.log(`Loading specifics for ${platform()} platform.`);
 
 function playFile(file, dbm) {
-  console.log(`Playing ${file} with ${dbm} => ${volume(dbm)}`);
+  console.log(`Playing ${file} with ${dbm} => ${volume(volumeForNet(dbm))}`);
   return command.replace("%VOLUME%", volume(dbm)).replace("%FILE%", file);
 }
 
