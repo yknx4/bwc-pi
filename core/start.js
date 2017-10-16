@@ -17,9 +17,7 @@ const netIntensity = net => parseFloat(net.signal_level);
 
 async function checkNetwork(net) {
   const devices = await Device.getAll();
-  const allowedSsids = devices
-    .filter(e => e.serialized.enabled)
-    .map(e => e.serialized.ssid);
+  const allowedSsids = devices.filter(e => e.enabled).map(e => e.ssid);
   const blindNearby = allowedSsids.some(ssid => net.ssid === ssid);
   return blindNearby;
 }

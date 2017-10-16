@@ -10,6 +10,12 @@ class Device {
     this.$ssid = ssid;
     this.$enabled = enabled === undefined ? true : enabled;
   }
+  get enabled() {
+    return this.$enabled;
+  }
+  get ssid() {
+    return this.$ssid;
+  }
   get serialized() {
     const {
       $id: id,
