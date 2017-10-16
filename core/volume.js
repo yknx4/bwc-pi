@@ -12,6 +12,7 @@ const volumeForIntensity = dbm =>
   interpolate(LOWER_LIMIT, MIN_VOLUME, UPPER_LIMIT, MAX_VOLUME, dbm * -1);
 const normalizedVolume = dbm => {
   const v = volumeForIntensity(dbm);
+  console.log(`Volume for ${dbm}dBm is ${v}`);
   if (v < MIN_VOLUME) return MIN_VOLUME;
   if (v > MAX_VOLUME) return MAX_VOLUME;
   return v;
