@@ -1,7 +1,7 @@
 const WiFiControl = require("wifi-control");
 const { promisify } = require("util");
 const { spawn } = require("child_process");
-const { exec } = require("shelljs");
+const { exec } = require("child_process");
 const { platform } = require("os");
 const path = require("path");
 const playFile = require("./index");
@@ -21,7 +21,7 @@ async function checkNetwork(net) {
   const blindNearby = allowedSsids.some(ssid => net.ssid === ssid);
   if (blindNearby) {
     console.log(`${net.ssid} ${net.signal_level}`);
-    spawn(
+    exec(
       playFile(
         path.join(__dirname, "./sounds/water.wav"),
         Math.abs(netIntensity(net))
