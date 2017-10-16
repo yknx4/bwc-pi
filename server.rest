@@ -7,7 +7,7 @@ GET http://rpi1:8000/devices/f1989d25-c311-44c2-85ab-6eb6c48ebfef HTTP/1.1
 Authorization: Basic ale figueroa
 
 ### Create
-POST http://rpi1:8000/devices HTTP/1.1
+POST http://localhost:8000/devices HTTP/1.1
 Authorization: Basic ale figueroa
 content-type: application/json
 

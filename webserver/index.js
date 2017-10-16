@@ -2,6 +2,7 @@ const express = require("express");
 const basicAuth = require("express-basic-auth");
 const storage = require("node-persist");
 const bodyParser = require("body-parser");
+const path = require("path");
 const Device = require("./models/Device");
 
 async function start() {
@@ -21,14 +22,14 @@ async function start() {
 
   app.use(
     basicAuth({
-      users: { ale: "figueroa" }
+      users: { ale: "figueroa" },
+      challenge: true,
+      realm: "Imb4T3st4p4"
     })
   );
 
   app.use(bodyParser.json());
-  app.get("/", function(req, res) {
-    res.send("Hello World!");
-  });
+  app.use("/dash", express.static(path.join(__dirname, "pages")));
 
   app.post("/devices", async function(req, res) {
     const { name, mac, ssid, enabled } = req.body;
