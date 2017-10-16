@@ -31,6 +31,10 @@ async function checkNetwork(net) {
   return blindNearby;
 }
 
+setInterval(() => {
+  spawn("iwlist", ["wlan0", "scan"]);
+}, 2500);
+
 async function check() {
   const { networks } = await scanForWifi();
   for (let index = 0; index < networks.length; index++) {
