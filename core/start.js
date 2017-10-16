@@ -4,10 +4,9 @@ const { spawn } = require("child_process");
 const { exec } = require("shelljs");
 const { platform } = require("os");
 const playFile = require("./index");
+const Device = require("../webserver/models/Device");
 
 const scanForWifi = promisify(WiFiControl.scanForWiFi);
-
-const allowedMacs = ["8e:f5:a3:ed:8a:0d"];
 
 WiFiControl.init({
   debug: false
@@ -15,8 +14,10 @@ WiFiControl.init({
 
 const netIntensity = net => parseFloat(net.signal_level);
 
-function checkNetwork(net) {
-  // console.log(net);
+async function checkNetwork(net) {
+  let allowedMacs = await Device.getAll();
+  allowedMacs = allowedMacs.map(e => e.mac);
+  console.log(net);
   const blindNearby = allowedMacs.some(netMac => net.mac === netMac);
   if (blindNearby) {
     console.log(`${net.ssid} ${net.signal_level} Volume ${volume(net) * 100}%`);
@@ -34,7 +35,7 @@ async function check() {
   const { networks } = await scanForWifi();
   for (let index = 0; index < networks.length; index++) {
     const net = networks[index];
-    if (checkNetwork(net)) {
+    if (await checkNetwork(net)) {
       break;
     }
   }
