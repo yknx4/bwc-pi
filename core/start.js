@@ -3,6 +3,7 @@ const { promisify } = require("util");
 const { spawn } = require("child_process");
 const { exec } = require("shelljs");
 const { platform } = require("os");
+const path = require("path");
 const playFile = require("./index");
 const Device = require("../webserver/models/Device");
 
@@ -22,7 +23,7 @@ async function checkNetwork(net) {
     console.log(`${net.ssid} ${net.signal_level}`);
     exec(
       playFile(
-        "/System/Library/Sounds/Submarine.aiff",
+        path.join(__dirname, "./sounds/water.wav"),
         Math.abs(netIntensity(net))
       )
     );
