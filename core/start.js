@@ -22,9 +22,10 @@ async function checkNetwork(net) {
   return blindNearby;
 }
 
-// setInterval(() => {
-//   spawn("sudo", ["iwlist", "wlan0", "scan"]);
-// }, 2500);
+setInterval(() => {
+  if (platform() !== "linux") return;
+  spawn("sudo", ["iwlist", "wlan0", "scan"]);
+}, 2500);
 
 async function check() {
   const { networks } = await scanForWifi();
