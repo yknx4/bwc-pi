@@ -19,35 +19,29 @@ async function checkNetwork(net) {
   const devices = await Device.getAll();
   const allowedSsids = devices.map(e => e.serialized.ssid);
   const blindNearby = allowedSsids.some(ssid => net.ssid === ssid);
-  if (blindNearby) {
-    console.log(`Found blind user => ${net.ssid} ${net.signal_level}`);
-    exec(
-      playFile(
-        path.join(__dirname, "./sounds/water.wav"),
-        Math.abs(netIntensity(net))
-      )
-    );
-  }
   return blindNearby;
 }
 
 setInterval(() => {
-  spawn("iwlist", ["wlan0", "scan"]);
+  spawn("sudo", ["iwlist", "wlan0", "scan"]);
 }, 2500);
 
-let checking = false;
-
 async function check() {
-  if (checking) return;
   const { networks } = await scanForWifi();
-  checking = false;
   for (let index = 0; index < networks.length; index++) {
     const net = networks[index];
+    const validNetwork = await checkNetwork(net);
     if (await checkNetwork(net)) {
+      console.log(`Found blind user => ${net.ssid} ${net.signal_level}`);
+      exec(
+        playFile(
+          path.join(__dirname, "./sounds/water.wav"),
+          Math.abs(netIntensity(net))
+        )
+      );
       break;
     }
   }
-  networks.forEach(checkNetwork);
 }
 
 module.exports = check;
