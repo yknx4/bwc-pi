@@ -5,7 +5,7 @@ const { volume, command } = require(`./${platform()}`);
 
 function playFile(file, dbm) {
   console.log(`Playing ${file} with ${dbm} => ${volume(dbm)}`);
-  return command.replace("%VOLUME", volume(dbm)).replace("%FILE%", file);
+  return command.replace("%VOLUME%", volume(dbm)).replace("%FILE%", file);
 }
 
 module.exports = playFile;
