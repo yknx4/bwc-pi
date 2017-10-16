@@ -1,11 +1,10 @@
-var host = "http://localhost:8000";
 var app = new Vue({
   el: "#app",
   methods: {
     toggleState: function(id, state) {
       axios({
         method: "PUT",
-        url: host + "/devices/" + id,
+        url: "/devices/" + id,
         data: {
           enabled: !state
         }
@@ -16,7 +15,7 @@ var app = new Vue({
     users: []
   },
   mounted() {
-    axios.get(host + "/devices").then(response => {
+    axios.get("/devices").then(response => {
       this.users = response.data.data;
     });
   }
