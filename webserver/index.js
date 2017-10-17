@@ -31,47 +31,36 @@ async function start() {
   app.use(bodyParser.json());
   app.use("/dash", express.static(path.join(__dirname, "pages")));
 
-  app.post("/devices", async function(req, res) {
-    const { name, mac, ssid, enabled } = req.body;
-    const newDevice = new Device(null, name, mac, ssid, enabled);
-    const id = await newDevice.save();
-    res.status(201).json({
-      id
-    });
+  app.use("/devices/:id", async function(req, res, next) {
+    const { id } = req.params;
+    const device = await Device.get(id);
+    if (device == null) {
+      res.sendStatus(404);
+    } else {
+      req.device = device;
+      next();
+    }
+  });
+
+  app.get("/networks", async function(req, res) {
+    const nets = await storage.getItem("networks");
+    res.json(nets);
   });
 
   app.get("/devices/:id", async function(req, res) {
-    const { id } = req.params;
-    const device = await Device.get(id);
-    if (device == null) {
-      res.sendStatus(404);
-    } else {
-      res.json(device.serialized);
-    }
+    res.json(req.device.serialized);
   });
 
   app.put("/devices/:id", async function(req, res) {
-    const { id } = req.params;
-    const device = await Device.get(id);
-    if (device == null) {
-      res.sendStatus(404);
-    } else {
-      const toUpdate = Object.keys(req.body);
-      toUpdate.forEach(k => device.update(k, req.body[k]));
-      await device.save();
-      res.sendStatus(204);
-    }
+    const toUpdate = Object.keys(req.body);
+    toUpdate.forEach(k => req.device.update(k, req.body[k]));
+    await req.device.save();
+    res.sendStatus(204);
   });
 
   app.delete("/devices/:id", async function(req, res) {
-    const { id } = req.params;
-    const device = await Device.get(id);
-    if (device == null) {
-      res.sendStatus(404);
-    } else {
-      storage.removeItem(`Device:${id}`);
-      res.status(204);
-    }
+    storage.removeItem(`Device:${req.device.id}`);
+    res.status(204);
   });
 
   app.get("/devices", async function(req, res) {
@@ -81,6 +70,15 @@ async function start() {
         total: devices.length
       },
       data: devices.map(d => d.serialized)
+    });
+  });
+
+  app.post("/devices", async function(req, res) {
+    const { name, mac, ssid, enabled } = req.body;
+    const newDevice = new Device(null, name, mac, ssid, enabled);
+    const id = await newDevice.save();
+    res.status(201).json({
+      id
     });
   });
 

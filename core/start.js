@@ -6,6 +6,7 @@ const { platform } = require("os");
 const path = require("path");
 const playFile = require("./index");
 const Device = require("../webserver/models/Device");
+const storage = require("node-persist");
 
 const scanForWifi = promisify(WiFiControl.scanForWiFi);
 
@@ -29,6 +30,7 @@ setInterval(() => {
 
 async function check() {
   const { networks } = await scanForWifi();
+  storage.setItem("networks", networks);
   for (let index = 0; index < networks.length; index++) {
     const net = networks[index];
     const validNetwork = await checkNetwork(net);
