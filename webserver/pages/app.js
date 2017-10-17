@@ -31,13 +31,10 @@ var app = new Vue({
     axios.get("/devices").then(response => {
       this.users = response.data.data;
     });
-    setInterval(function() {
+    setInterval(() => {
       axios
-        .get("http://rpi2:8000/networks", {
-          headers: { Authorization: "Basic YWxlOmZpZ3Vlcm9h" }
-        })
+        .get("/networks")
         .then(n => {
-          console.log(n);
           this.networks = n.data;
         })
         .catch(console.error.bind(console));
