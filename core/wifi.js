@@ -14,6 +14,7 @@ async function getNetworks() {
   const nets = stdout
     .split("\n")
     .map(nmcliRegex.exec.bind(nmcliRegex))
+    .filter(e => e != null)
     .map(m => ({
       signal_level: m[1],
       ssid: unescape(m[2]),
