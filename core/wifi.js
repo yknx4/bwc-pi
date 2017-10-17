@@ -6,7 +6,7 @@ const refresh = "sudo iwlist scan";
 const getNetworksCmd = "nmcli -t -f SIGNAL,SSID,BSSID dev wifi list";
 
 const nmcliRegex = /(\d*):(.*):(([0-9A-Fa-f]{2}\\:){5}([0-9A-Fa-f]{2}))/;
-const unescape = s => s.replace("\\:", ":").replace("\\\\", "\\");
+const unescape = s => s.replace(/\\:/g, ":").replace(/\\\\/g, "\\");
 
 async function getNetworks() {
   await exec(refresh);
