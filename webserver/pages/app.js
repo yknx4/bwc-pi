@@ -13,7 +13,7 @@ var app = new Vue({
     volume: function(val) {
       const v = parseInt(2000 * Math.log(Math.abs(101 - val) / 100));
       if (v > 0) return 0;
-      if (v < -4000) return -4000;
+      if (v < -2000) return -2000;
       return v;
     },
     existsSsid(ssid) {
