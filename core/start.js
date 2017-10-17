@@ -8,35 +8,47 @@ const Device = require("../webserver/models/Device");
 const storage = require("node-persist");
 const getNetworks = require("./wifi");
 
-const netIntensity = net => parseFloat(net.signal_level);
+const netIntensity = sl => Math.abs(parseFloat(sl));
 
 async function checkNetwork(net) {
   const devices = await Device.getAll();
   const allowedSsids = devices.filter(e => e.enabled).map(e => e.ssid);
   const allowedMacs = devices.filter(e => e.enabled).map(e => e.mac);
-  const blindNearby =
-    allowedSsids.some(ssid => net.ssid === ssid) ||
-    allowedMacs.some(mac => net.mac === mac);
-  return blindNearby;
+  const blinds = devices.filter(net => {
+    return (
+      allowedSsids.some(ssid => net.ssid === ssid) ||
+      allowedMacs.some(mac => net.mac === mac)
+    );
+  });
+  return blinds;
 }
 
 async function check() {
   const networks = await getNetworks();
   storage.setItem("networks", networks);
-  for (let index = 0; index < networks.length; index++) {
-    const net = networks[index];
-    const validNetwork = await checkNetwork(net);
-    if (await checkNetwork(net)) {
-      console.log(`Found blind user => ${net.ssid} ${net.signal_level}`);
-      exec(
-        playFile(
-          path.join(__dirname, "./sounds/water.wav"),
-          Math.abs(netIntensity(net))
-        )
-      );
-      break;
-    }
+
+  const devices = await Device.getAll();
+  const allowedSsids = devices.filter(e => e.enabled).map(e => e.ssid);
+  const allowedMacs = devices.filter(e => e.enabled).map(e => e.mac);
+
+  const blinds = networks.filter(net => {
+    return (
+      allowedSsids.some(ssid => net.ssid === ssid) ||
+      allowedMacs.some(mac => net.mac === mac)
+    );
+  });
+
+  if (blinds.length < 1) {
+    return;
   }
+  console.log(`Found blind users => ${JSON.stringify(blinds)}`);
+  const signals = blinds.map(e => e.signal_level);
+  exec(
+    playFile(
+      path.join(__dirname, "./sounds/water.wav"),
+      netIntensity(Math.min(signals))
+    )
+  );
 }
 
 module.exports = check;
