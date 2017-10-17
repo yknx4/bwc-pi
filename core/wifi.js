@@ -20,7 +20,7 @@ async function getNetworks() {
       ssid: unescape(m[2]),
       mac: unescape(m[3])
     }));
-  console.log(nets);
+  return nets;
 }
 
 module.exports = getNetworks;

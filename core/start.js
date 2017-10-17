@@ -1,4 +1,3 @@
-const WiFiControl = require("wifi-control");
 const { promisify } = require("util");
 const { spawn } = require("child_process");
 const { exec } = require("child_process");
@@ -9,29 +8,20 @@ const Device = require("../webserver/models/Device");
 const storage = require("node-persist");
 const getNetworks = require("./wifi");
 
-const scanForWifi = promisify(WiFiControl.scanForWiFi);
-
-WiFiControl.init({
-  debug: false
-});
-
 const netIntensity = net => parseFloat(net.signal_level);
 
 async function checkNetwork(net) {
   const devices = await Device.getAll();
   const allowedSsids = devices.filter(e => e.enabled).map(e => e.ssid);
-  const blindNearby = allowedSsids.some(ssid => net.ssid === ssid);
+  const allowedMacs = devices.filter(e => e.enabled).map(e => e.mac);
+  const blindNearby =
+    allowedSsids.some(ssid => net.ssid === ssid) ||
+    allowedMacs.some(mac => net.mac === mac);
   return blindNearby;
 }
 
-setInterval(() => {
-  if (platform() !== "linux") return;
-  spawn("sudo", ["iwlist", "wlan0", "scan"]);
-}, 2500);
-
 async function check() {
-  getNetworks();
-  const { networks } = await scanForWifi();
+  const networks = await getNetworks();
   storage.setItem("networks", networks);
   for (let index = 0; index < networks.length; index++) {
     const net = networks[index];

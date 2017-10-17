@@ -1431,12 +1431,6 @@ node-persist@^2.1.0:
     mkdirp "~0.5.1"
     q "~1.1.1"
 
-node-wifiscanner2@^1.1.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/node-wifiscanner2/-/node-wifiscanner2-1.2.0.tgz#967fad0d757b430a39b2718d408cbbd9ec1eb480"
-  dependencies:
-    os-locale "^1.4.0"
-
 "nopt@2 || 3":
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/nopt/-/nopt-3.0.6.tgz#c6465dbf08abcd4db359317f79ac68a646b28ff9"
@@ -1666,12 +1660,6 @@ opener@~1.4.3:
 os-homedir@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/os-homedir/-/os-homedir-1.0.2.tgz#ffbc4988336e0e833de0c168c7ef152121aa7fb3"
-
-os-locale@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/os-locale/-/os-locale-1.4.0.tgz#20f9f17ae29ed345e8bde583b13d2009803c14d9"
-  dependencies:
-    lcid "^1.0.0"
 
 os-locale@^2.0.0:
   version "2.1.0"
@@ -2352,10 +2340,6 @@ supports-color@^4.0.0:
   dependencies:
     has-flag "^2.0.0"
 
-sync-exec@^0.6.2:
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/sync-exec/-/sync-exec-0.6.2.tgz#717d22cc53f0ce1def5594362f3a89a2ebb91105"
-
 tar@^2.0.0:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/tar/-/tar-2.2.1.tgz#8e4d2a256c0e2185c6b18ad694aec968b83cb1d1"
@@ -2551,13 +2535,6 @@ widest-line@^1.0.0:
   resolved "https://registry.yarnpkg.com/widest-line/-/widest-line-1.0.0.tgz#0c09c85c2a94683d0d7eaf8ee097d564bf0e105c"
   dependencies:
     string-width "^1.0.1"
-
-wifi-control@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/wifi-control/-/wifi-control-2.0.1.tgz#5ac0d562b4ac8d7473880272e2631ecebf326e09"
-  dependencies:
-    node-wifiscanner2 "^1.1.0"
-    sync-exec "^0.6.2"
 
 worker-farm@~1.5.0:
   version "1.5.0"
