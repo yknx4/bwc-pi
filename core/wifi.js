@@ -14,9 +14,12 @@ async function getNetworks() {
   const nets = stdout
     .split("\n")
     .map(nmcliRegex.exec.bind(nmcliRegex))
-    .map(m => {
-      console.log(m);
-    });
+    .map(m => ({
+      signal_level: m[1],
+      ssid: unescape(m[2]),
+      mac: unescape(m[3])
+    }));
+  console.log(nets);
 }
 
 module.exports = getNetworks;
