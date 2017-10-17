@@ -6,7 +6,7 @@ class Device {
   constructor(id, name, mac, ssid, enabled) {
     this.$id = id || uuid();
     this.$name = name;
-    this.$mac = mac;
+    this.$mac = mac || "00:00:00:00:00";
     this.$ssid = ssid;
     this.$enabled = enabled === undefined ? true : enabled;
   }

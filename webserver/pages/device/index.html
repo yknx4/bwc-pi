@@ -21,6 +21,8 @@
           <input v-model="user.name" type="text" id="name" class="form-control" placeholder="Name" required autofocus>
           <label for="ssid" class="sr-only">{{user.ssid}}</label>
           <input v-model="user.ssid" type="text" id="ssid" class="form-control" placeholder="SSID" required autofocus>
+          <label for="mac" class="sr-only">{{user.mac}}</label>
+          <input v-model="user.mac" type="text" id="mac" class="form-control" placeholder="00:00:00:00:00" required autofocus>
           <div class="checkbox">
             <label>
               <input type="checkbox" value="enabled" id="enabled" v-model="user.enabled"> Enabled

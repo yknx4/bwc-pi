@@ -15,12 +15,12 @@
   <div id="app" class="container-fluid">
     <div class="row">
       <main class="col-sm-9 ml-sm-auto col-md-12 pt-3" role="main">
-        <h1>Blind Users Dashboard</h1>
+        <h1>Blind Users</h1>
         <div class="table-responsive">
           <table class="table table-striped">
             <thead>
               <tr>
-                <th>Id</th>
+                <th>Mac</th>
                 <th>Name</th>
                 <th>SSID</th>
                 <th>Enabled</th>
@@ -29,10 +29,10 @@
             <tbody>
               <tr v-for="user in users">
                 <td>
-                  <a :href="'/dash/device?id='+user.id">{{user.id}}</a>
+                  <a :href="'/dash/device?id='+user.id">{{user.mac || '00:00:00:00:00'}} {{existsMac(user.mac) ? '✓' : ''}}</a>
                 </td>
                 <td>{{user.name}}</td>
-                <td>{{user.ssid}}</td>
+                <td>{{user.ssid}} {{existsSsid(user.ssid) ? '✓' : ''}}</td>
                 <td>
                   <input type="checkbox" name="enabled" v-model="user.enabled" v-bind:id="'check'+user.id" v-on:click="toggleState(user.id, user.enabled)">
                 </td>
@@ -41,6 +41,27 @@
           </table>
         </div>
         <a href="/dash/device" class="btn btn-info">New User</a>
+        <h1>Detected Networks</h1>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Mac</th>
+                <th>SSID</th>
+                <th>Intensity</th>
+                <th>Volume</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="net in networks">
+                <td>{{net.mac}}</td>
+                <td>{{net.ssid}}</td>
+                <td>{{net.signal_level}}%</td>
+                <td>{{volume(net.signal_level)}}dBm</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </main>
     </div>
   </div>

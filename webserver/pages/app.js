@@ -9,17 +9,36 @@ var app = new Vue({
           enabled: !state
         }
       });
+    },
+    volume: function(val) {
+      const v = parseInt(2000 * Math.log(Math.abs(101 - val) / 100));
+      if (v > 0) return 0;
+      if (v < -4000) return -4000;
+      return v;
+    },
+    existsSsid(ssid) {
+      return this.networks.some(e => e.ssid === ssid);
+    },
+    existsMac(mac) {
+      return this.networks.some(e => e.mac === mac);
     }
   },
   data: {
-    users: []
+    users: [],
+    networks: []
   },
   mounted() {
     axios.get("/devices").then(response => {
       this.users = response.data.data;
     });
     setInterval(function() {
-      axios.get("/networks").then(console.log.bind(console));
+      axios
+        .get("/networks")
+        .then(r => r.data)
+        .then(n => {
+          this.networks = n;
+        })
+        .catch(console.error.bind(console));
     }, 1000);
   }
 });
