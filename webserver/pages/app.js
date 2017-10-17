@@ -33,10 +33,9 @@ var app = new Vue({
     });
     setInterval(function() {
       axios
-        .get("/networks")
-        .then(r => r.data)
+        .get("http://rpi2:8000/networks")
         .then(n => {
-          this.networks = n;
+          this.networks = n.data;
         })
         .catch(console.error.bind(console));
     }, 1000);

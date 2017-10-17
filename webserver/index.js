@@ -3,6 +3,7 @@ const basicAuth = require("express-basic-auth");
 const storage = require("node-persist");
 const bodyParser = require("body-parser");
 const path = require("path");
+const cors = require("cors");
 const Device = require("./models/Device");
 
 async function start() {
@@ -28,6 +29,8 @@ async function start() {
     })
   );
 
+  app.use(cors());
+  app.options("*", cors());
   app.use(bodyParser.json());
   app.use("/dash", express.static(path.join(__dirname, "pages")));
 
