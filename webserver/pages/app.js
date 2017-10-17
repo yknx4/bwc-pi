@@ -33,8 +33,11 @@ var app = new Vue({
     });
     setInterval(function() {
       axios
-        .get("http://rpi2:8000/networks")
+        .get("http://rpi2:8000/networks", {
+          headers: { Authorization: "Basic YWxlOmZpZ3Vlcm9h" }
+        })
         .then(n => {
+          console.log(n);
           this.networks = n.data;
         })
         .catch(console.error.bind(console));

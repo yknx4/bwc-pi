@@ -20,6 +20,7 @@ async function start() {
   });
 
   app.set("db", storage);
+  app.options("*", cors());
 
   app.use(
     basicAuth({
@@ -30,7 +31,6 @@ async function start() {
   );
 
   app.use(cors());
-  app.options("*", cors());
   app.use(bodyParser.json());
   app.use("/dash", express.static(path.join(__dirname, "pages")));
 
