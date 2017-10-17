@@ -43,11 +43,10 @@ async function check() {
   }
   console.log(`Found blind users => ${JSON.stringify(blinds)}`);
   const signals = blinds.map(e => e.signal_level);
-  console.log(signals);
   exec(
     playFile(
       path.join(__dirname, "./sounds/water.wav"),
-      netIntensity(Math.min(signals))
+      netIntensity(Math.min(...signals))
     )
   );
 }
